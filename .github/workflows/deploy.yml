@@ -16,8 +16,17 @@ jobs:
       - name: Configurar token GH_TOKEN
         run: echo "GH_TOKEN=${{ secrets.GH_TOKEN }}" >> $GITHUB_ENV
 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18.16.0'  # Cambia la versión de Node.js según tus requisitos
+
       - name: Instalar dependencias
         run: npm install
+
+      - name: Instalar Node.js y Vite
+        run: |
+          npm install -g vite
+        if: success()
 
       - name: Construir la aplicación
         run: npm run build
