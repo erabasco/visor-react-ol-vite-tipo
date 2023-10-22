@@ -21,4 +21,4 @@ jobs:
 
       - name: Despliegue en servidor o plataforma
         run: |
-          lftp -e "set ftp:ssl-allow no; mirror -R build/ /" -u $USER,$PASSWORD $HOST
+          lftp -e "set ftp:ssl-allow no; mirror -R build/ /" -u ${{ secrets.USER }},${{ secrets.PASSWORD }} ${{ secrets.HOST }}
