@@ -31,13 +31,17 @@ jobs:
       - name: Construir la aplicación
         run: npm run build
 
-      - name: Despliegue en servidor o plataforma
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-        with:
-          delete_remote_files: true
-          username: ${{ secrets.USER }}
-          server: ${{ secrets.HOST }}
-          password: ${{ secrets.PASSWORD }}
-          local_path: './dist/*'  # Ruta local del directorio de archivos que deseas cargar
-          remote_path: '/'  # Ruta remota en el servidor
-          sftpArgs: '-o ConnectTimeout=5'
+      # - name: Despliegue en servidor o plataforma
+      #   uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+      #   with:
+      #     delete_remote_files: true
+      #     username: ${{ secrets.USER }}
+      #     server: ${{ secrets.HOST }}
+      #     password: ${{ secrets.PASSWORD }}
+      #     local_path: './dist/*'  # Ruta local del directorio de archivos que deseas cargar
+      #     remote_path: '/'  # Ruta remota en el servidor
+      #     sftpArgs: '-o ConnectTimeout=5'
+
+      - name: Despliegue en servidor con FTP
+        run: |
+          lftp -e "mirror -R build/ /" -u ${{ secrets.USER }},${{ secrets.PASSWORD }} ${{ secrets.HOST }}
