@@ -15,8 +15,6 @@ jobs:
 
       - name: Configurar token GH_TOKEN
         run: echo "echo \${{ secrets.GH_TOKEN }}" >> $GITHUB_ENV
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Instalar dependencias
         run: npm install
@@ -26,15 +24,20 @@ jobs:
 
       - name: Comprobar conexión al servidor de destino
         run: |
-          if curl --output /dev/null --silent --head --fail "$HOST"; then
+          if curl --output /dev/null --silent --head --fail "${{ secrets.HOST }}"; then
             echo "Conexión al servidor de destino exitosa"
           else
             echo "No se pudo establecer conexión con el servidor de destino"
             exit 1  # Terminar el flujo de trabajo con un error
           fi
-        env:
-          HOST: ${{ secrets.HOST }}
 
       - name: Despliegue en servidor o plataforma
-        run: |
-          lftp -e "set ftp:ssl-allow no; mirror -R build/ /" -u ${{ secrets.USER }},${{ secrets.PASSWORD }} ${{ secrets.HOST }}
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          delete_remote_files: true
+          username: ${{ secrets.USER }}
+          server: ${{ secrets.HOST }}
+          password: ${{ secrets.PASSWORD }}
+          local_path: './build'  # Ruta local del directorio de archivos que deseas cargar
+          remote_path: '/'  # Ruta remota en el servidor
+          sftpArgs: '-o ConnectTimeout=5'
