@@ -18,3 +18,5 @@ añadir en package.json
     "extends": "./node_modules/standard/eslintrc.json"
   }
 ```
+
+## configurando yml
