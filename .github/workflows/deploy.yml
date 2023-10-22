@@ -13,6 +13,11 @@ jobs:
       - name: Checkout código fuente
         uses: actions/checkout@v2
 
+      - name: Configurar token GH_TOKEN
+        run: echo "echo \${{ secrets.GH_TOKEN }}" >> $GITHUB_ENV
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
       - name: Instalar dependencias
         run: npm install
 
