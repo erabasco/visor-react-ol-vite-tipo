@@ -1,0 +1,24 @@
+name: Build and Deploy React App
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código fuente
+        uses: actions/checkout@v2
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Construir la aplicación
+        run: npm run build
+
+      - name: Despliegue en servidor o plataforma
+        run: |
+          lftp -e "set ftp:ssl-allow no; mirror -R build/ /test.geoinnova.org/public_html/react" -u $USER,$PASSWORD $HOST
