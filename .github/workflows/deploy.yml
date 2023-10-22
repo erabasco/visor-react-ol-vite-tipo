@@ -13,11 +13,27 @@ jobs:
       - name: Checkout código fuente
         uses: actions/checkout@v2
 
+      - name: Configurar token GH_TOKEN
+        run: echo "echo \${{ secrets.GH_TOKEN }}" >> $GITHUB_ENV
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
       - name: Instalar dependencias
         run: npm install
 
       - name: Construir la aplicación
         run: npm run build
+
+      - name: Comprobar conexión al servidor de destino
+        run: |
+          if curl --output /dev/null --silent --head --fail "$HOST"; then
+            echo "Conexión al servidor de destino exitosa"
+          else
+            echo "No se pudo establecer conexión con el servidor de destino"
+            exit 1  # Terminar el flujo de trabajo con un error
+          fi
+        env:
+          HOST: ${{ secrets.HOST }}
 
       - name: Despliegue en servidor o plataforma
         run: |
