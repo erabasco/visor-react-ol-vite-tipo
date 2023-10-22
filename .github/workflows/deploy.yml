@@ -31,15 +31,6 @@ jobs:
       - name: Construir la aplicación
         run: npm run build
 
-      - name: Comprobar conexión al servidor de destino
-        run: |
-          if curl --output /dev/null --silent --head --fail "${{ secrets.HOST }}"; then
-            echo "Conexión al servidor de destino exitosa"
-          else
-            echo "No se pudo establecer conexión con el servidor de destino"
-            exit 1  # Terminar el flujo de trabajo con un error
-          fi
-
       - name: Despliegue en servidor o plataforma
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
@@ -47,6 +38,6 @@ jobs:
           username: ${{ secrets.USER }}
           server: ${{ secrets.HOST }}
           password: ${{ secrets.PASSWORD }}
-          local_path: './build'  # Ruta local del directorio de archivos que deseas cargar
+          local_path: './dist/*'  # Ruta local del directorio de archivos que deseas cargar
           remote_path: '/'  # Ruta remota en el servidor
           sftpArgs: '-o ConnectTimeout=5'
