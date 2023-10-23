@@ -67,11 +67,12 @@ jobs:
       - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          ftp-server: ${{ secrets.HOST }}
-          ftp-username: ${{ secrets.USER }}
-          ftp-password: ${{ secrets.PASSWORD }}
+          server: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          password: ${{ secrets.PASSWORD }}
           local-dir: './dist'
           server-dir: '/public_html/react'
           protocol: 'ftp'
+
 
 
