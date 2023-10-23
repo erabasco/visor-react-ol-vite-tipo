@@ -47,7 +47,15 @@ jobs:
           quit
           EOF
 
+      - name: Verificar existencia de la ruta en el servidor FTP
+        run: |
+          lftp -u ${{ secrets.USER }},${{ secrets.PASSWORD }} ${{ secrets.HOST }} <<EOF
+          ls /public_html/react/
+          quit
+          EOF
+
 
       - name: Despliegue en servidor con FTP
         run: |
-          lftp -e "mirror -R './dist/*' /react/" -u ${{ secrets.USER }},${{ secrets.PASSWORD }} ${{ secrets.HOST }}
+          lftp -e "mirror -R './dist/*' /public_html/react/" -u ${{ secrets.USER }},${{ secrets.PASSWORD }} test.geoinnova.org
+
