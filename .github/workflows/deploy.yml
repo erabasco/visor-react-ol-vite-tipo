@@ -14,7 +14,8 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Cambiar al directorio raíz del repositorio
-        run: cd visor-react-ol-vite-tipo
+        run: cd /home/runner/work/erabasco/visor-react-ol-vite-tipo/visor-react-ol-vite-tipo
+
 
 
       - name: Configurar token GH_TOKEN
