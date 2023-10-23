@@ -47,13 +47,13 @@ jobs:
       #     quit
       #     EOF
 
-      - name: Verificar existencia de la ruta en el servidor FTP
-        run: |
-          lftp -u ${{ secrets.USER }},${{ secrets.PASSWORD }} ${{ secrets.HOST }} <<EOF
-          set ssl:verify-certificate no
-          ls /public_html/react/
-          quit
-          EOF
+      # - name: Verificar existencia de la ruta en el servidor FTP
+      #   run: |
+      #     lftp -u ${{ secrets.USER }},${{ secrets.PASSWORD }} ${{ secrets.HOST }} <<EOF
+      #     set ssl:verify-certificate no
+      #     ls /public_html/react/
+      #     quit
+      #     EOF
 
         #  Intentará conectarse al servidor FTP y ejecutar el comando ls para comprobar si existe
         #  /public_html/react/ para listar los archivos en la ruta /public_html/react/. 
