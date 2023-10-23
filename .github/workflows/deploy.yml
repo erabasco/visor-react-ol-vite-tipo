@@ -60,7 +60,18 @@ jobs:
         #  Si la ruta existe, el comando ls /public_html/react/ se ejecutará y el script continuará. Si la ruta no existe, el comando ls /public_html/react/ fallará y el script se detendrá.
 
 
-      - name: Despliegue en servidor con FTP
-        run: |
-          lftp -e "mirror -R './dist/*' /public_html/react/" -u ${{ secrets.USER }},${{ secrets.PASSWORD }}
+      # - name: Despliegue en servidor con FTP
+      #   run: |
+      #     lftp -e "mirror -R './dist/*' /public_html/react/" -u ${{ secrets.USER }},${{ secrets.PASSWORD }}
+
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          ftp-server: ${{ secrets.HOST }}
+          ftp-username: ${{ secrets.USER }}
+          ftp-password: ${{ secrets.PASSWORD }}
+          local-dir: './dist'
+          server-dir: '/public_html/react'
+          protocol: 'ftp'
+
 
