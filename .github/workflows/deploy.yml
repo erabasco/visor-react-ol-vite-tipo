@@ -13,11 +13,6 @@ jobs:
       - name: Checkout código fuente
         uses: actions/checkout@v2
 
-      - name: Cambiar al directorio raíz del repositorio
-        run: cd /home/runner/work/erabasco/visor-react-ol-vite-tipo
-
-
-
       - name: Configurar token GH_TOKEN
         run: echo "GH_TOKEN=${{ secrets.GH_TOKEN }}" >> $GITHUB_ENV
 
