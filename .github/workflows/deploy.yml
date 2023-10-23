@@ -31,6 +31,10 @@ jobs:
       - name: Construir la aplicación
         run: npm run build
 
+      - name: Verificar creación de la carpeta dist
+        run: |
+          ls -la
+
 
       - name: Instalar lftp
         run: sudo apt-get install lftp
