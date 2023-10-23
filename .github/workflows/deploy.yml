@@ -31,25 +31,19 @@ jobs:
       - name: Construir la aplicación
         run: npm run build
 
-      # - name: Despliegue en servidor o plataforma
-      #   uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-      #   with:
-      #     delete_remote_files: true
-      #     username: ${{ secrets.USER }}
-      #     server: ${{ secrets.HOST }}
-      #     password: ${{ secrets.PASSWORD }}
-      #     local_path: './dist/*'  # Ruta local del directorio de archivos que deseas cargar
-      #     remote_path: '/'  # Ruta remota en el servidor
-      #     sftpArgs: '-o ConnectTimeout=5'
 
-      # - name: Despliegue en servidor con FTP
-      #   run: |
-      #     lftp -e "mirror -R build/ /" -u ${{ secrets.USER }},${{ secrets.PASSWORD }} ${{ secrets.HOST }}
+      - name: Instalar lftp
+        run: sudo apt-get install lftp
 
 
-      - name: Check FTP Connection
+      - name: Verificar conexión FTP
         run: |
-          echo "ftp_host=${{ secrets.HOST }}" >> ftp_credentials.env
-          echo "ftp_user=${{ secrets.USER }}" >> ftp_credentials.env
-          echo "ftp_password=${{ secrets.PASSWORD }}" >> ftp_credentials.env
-          npx ftp-deploy -c ftp_credentials.env
+          lftp -u ${{ secrets.USER }},${{ secrets.PASSWORD }} ${{ secrets.HOST }} <<EOF
+          pwd
+          quit
+          EOF
+
+
+      - name: Despliegue en servidor con FTP
+        run: |
+          lftp -e "mirror -R './dist/*' /" -u ${{ secrets.USER }},${{ secrets.PASSWORD }} ${{ secrets.HOST }}
