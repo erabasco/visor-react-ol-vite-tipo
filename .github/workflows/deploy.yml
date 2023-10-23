@@ -31,21 +31,21 @@ jobs:
       - name: Construir la aplicación
         run: npm run build
 
-      - name: Verificar creación de la carpeta dist
-        run: |
-          ls -la
+      # - name: Verificar creación de la carpeta dist
+      #   run: |
+      #     ls -la
 
 
-      - name: Instalar lftp
-        run: sudo apt-get install lftp
+      # - name: Instalar lftp
+      #   run: sudo apt-get install lftp
 
 
-      - name: Verificar conexión FTP
-        run: |
-          lftp -u ${{ secrets.USER }},${{ secrets.PASSWORD }} ${{ secrets.HOST }} <<EOF
-          pwd
-          quit
-          EOF
+      # - name: Verificar conexión FTP
+      #   run: |
+      #     lftp -u ${{ secrets.USER }},${{ secrets.PASSWORD }} ${{ secrets.HOST }} <<EOF
+      #     pwd
+      #     quit
+      #     EOF
 
       - name: Verificar existencia de la ruta en el servidor FTP
         run: |
@@ -71,7 +71,7 @@ jobs:
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
           local-dir: './dist/'
-          server-dir: '/public_html/react'
+          server-dir: '/public_html/react/'
           protocol: 'ftp'
 
 
