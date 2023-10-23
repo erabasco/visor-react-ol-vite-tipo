@@ -50,4 +50,4 @@ jobs:
 
       - name: Despliegue en servidor con FTP
         run: |
-          lftp -e "mirror -R './dist/*' /" -u ${{ secrets.USER }},${{ secrets.PASSWORD }} ${{ secrets.HOST }}
+          lftp -e "mirror -R './dist/*' /react/" -u ${{ secrets.USER }},${{ secrets.PASSWORD }} ${{ secrets.HOST }}
