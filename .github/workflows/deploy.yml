@@ -62,5 +62,5 @@ jobs:
 
       - name: Despliegue en servidor con FTP
         run: |
-          lftp -e "mirror -R './dist/*' /public_html/react/" -u ${{ secrets.USER }},${{ secrets.PASSWORD }} test.geoinnova.org
+          lftp -e "mirror -R './dist/*' /public_html/react/" -u ${{ secrets.USER }},${{ secrets.PASSWORD }}
 
