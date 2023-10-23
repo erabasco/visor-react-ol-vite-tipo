@@ -42,6 +42,14 @@ jobs:
       #     remote_path: '/'  # Ruta remota en el servidor
       #     sftpArgs: '-o ConnectTimeout=5'
 
-      - name: Despliegue en servidor con FTP
+      # - name: Despliegue en servidor con FTP
+      #   run: |
+      #     lftp -e "mirror -R build/ /" -u ${{ secrets.USER }},${{ secrets.PASSWORD }} ${{ secrets.HOST }}
+
+
+      - name: Check FTP Connection
         run: |
-          lftp -e "mirror -R build/ /" -u ${{ secrets.USER }},${{ secrets.PASSWORD }} ${{ secrets.HOST }}
+          echo "ftp_host=${{ secrets.HOST }}" >> ftp_credentials.env
+          echo "ftp_user=${{ secrets.USER }}" >> ftp_credentials.env
+          echo "ftp_password=${{ secrets.PASSWORD }}" >> ftp_credentials.env
+          npx ftp-deploy -c ftp_credentials.env
