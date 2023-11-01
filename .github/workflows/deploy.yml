@@ -1,10 +1,9 @@
+---
 name: Build and Deploy React App
-
 on:
   pull_request:
     branches:
       - main
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,8 +12,8 @@ jobs:
       - name: Checkout código fuente
         uses: actions/checkout@v2
 
-      - name: Configurar token GH_TOKEN
-        run: echo "GH_TOKEN=${{ secrets.GH_TOKEN }}" >> $GITHUB_ENV
+      # - name: Configurar token GH_TOKEN
+      #   run: echo "GH_TOKEN=${{ secrets.GH_TOKEN }}" >> $GITHUB_ENV
 
       - uses: actions/setup-node@v3
         with:
@@ -30,39 +29,6 @@ jobs:
 
       - name: Construir la aplicación
         run: npm run build
-
-      # - name: Verificar creación de la carpeta dist
-      #   run: |
-      #     ls -la
-
-
-      # - name: Instalar lftp
-      #   run: sudo apt-get install lftp
-
-
-      # - name: Verificar conexión FTP
-      #   run: |
-      #     lftp -u ${{ secrets.USER }},${{ secrets.PASSWORD }} ${{ secrets.HOST }} <<EOF
-      #     pwd
-      #     quit
-      #     EOF
-
-      # - name: Verificar existencia de la ruta en el servidor FTP
-      #   run: |
-      #     lftp -u ${{ secrets.USER }},${{ secrets.PASSWORD }} ${{ secrets.HOST }} <<EOF
-      #     set ssl:verify-certificate no
-      #     ls /public_html/react/
-      #     quit
-      #     EOF
-
-        #  Intentará conectarse al servidor FTP y ejecutar el comando ls para comprobar si existe
-        #  /public_html/react/ para listar los archivos en la ruta /public_html/react/. 
-        #  Si la ruta existe, el comando ls /public_html/react/ se ejecutará y el script continuará. Si la ruta no existe, el comando ls /public_html/react/ fallará y el script se detendrá.
-
-
-      # - name: Despliegue en servidor con FTP
-      #   run: |
-      #     lftp -e "mirror -R './dist/*' /public_html/react/" -u ${{ secrets.USER }},${{ secrets.PASSWORD }}
 
       - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
